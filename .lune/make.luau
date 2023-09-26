@@ -16,7 +16,7 @@ local BoxifyOutput = function(msg: string)
 		local lines = msg:split("\n")
 		local paddingNum = 0
 
-		for k, line in lines do
+		for _, line in lines do
 			if paddingNum and #line > paddingNum then
 				paddingNum = math.round(#line / 2)
 			end
