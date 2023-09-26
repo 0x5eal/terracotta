@@ -42,7 +42,7 @@ export type Options = {
 return function(opts: Options): string
 	local generator: Generators = opts.generator or "retain_lines"
 	local encodedExcludes = JSONEncode(opts.excludes)
-	local excludes = (encodedExcludes == "null" and "[]") or encodedExcludes
+	local excludes = (encodedExcludes == "null" and '["@lune/**"]') or encodedExcludes
 	local requireMode = opts.requireMode or "path"
 	local moduleFolderName = opts.moduleFolderName or "init"
 	local sources = JSONEncode(opts.sources or { ["@terracotta"] = "./.terracotta" })
