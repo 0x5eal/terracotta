@@ -1,0 +1,47 @@
+{
+    "name": "terracotta",
+    "className": "Folder",
+    "filePaths": [
+        "default.project.json"
+    ],
+    "children": [
+        {
+            "name": "darklua",
+            "className": "Folder",
+            "children": [
+                {
+                    "name": "bundler",
+                    "className": "ModuleScript",
+                    "filePaths": [
+                        "darklua/bundler.luau"
+                    ]
+                },
+                {
+                    "name": "cmd",
+                    "className": "ModuleScript",
+                    "filePaths": [
+                        "darklua/cmd.luau"
+                    ]
+                },
+                {
+                    "name": "codegen",
+                    "className": "ModuleScript",
+                    "filePaths": [
+                        "darklua/codegen.luau"
+                    ]
+                },
+                {
+                    "name": "minifier",
+                    "className": "ModuleScript",
+                    "filePaths": [
+                        "darklua/minifier.luau"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "terracotta",
+            "className": "Folder"
+        }
+    ]
+}
