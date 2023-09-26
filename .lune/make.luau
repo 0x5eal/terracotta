@@ -63,12 +63,6 @@ fs.writeFile(
 	})
 )
 
-codegen({
-	rules = {
-		"config",
-	},
-})
-
 local loader = task.spawn(function()
 	local chars = { "-", "\\", "|", "/" }
 	local isFirstRun = true
@@ -108,6 +102,6 @@ task.spawn(function()
 		print()
 		print(`{WAX_PREFIX_FORMAT("info")} Successfully built terracotta.luau!`)
 	end
-end)
 
-fs.removeFile(".darklua.json5")
+	fs.removeFile(".darklua.json5")
+end)
