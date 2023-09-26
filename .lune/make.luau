@@ -9,6 +9,9 @@ local WAX_PREFIX_FORMAT = function(type: "error" | "info", scope: string?)
 	return stdio.color(if type == "error" then "red" else "green") .. (scope or "[wax]") .. stdio.color("reset")
 end
 
+local LARGE_SCALE_FACTOR = 5.5
+local REGULAR_SCALE_FACTOR = 4
+
 local BoxifyOutput = function(msg: string)
 	local pad = (" "):rep(#msg / 2)
 
@@ -27,7 +30,7 @@ local BoxifyOutput = function(msg: string)
 		local processedLines = {}
 
 		for k, line in lines do
-			local paddedMsg = pad .. line .. (" "):rep((paddingNum * 5.5) - paddingNum - utf8.len(line))
+			local paddedMsg = pad .. line .. (" "):rep((paddingNum * LARGE_SCALE_FACTOR) - paddingNum - utf8.len(line))
 
 			-- This is a hack for outputs made by wax, if the first line contains
 			-- "creating directory"
@@ -38,13 +41,13 @@ local BoxifyOutput = function(msg: string)
 			table.insert(processedLines, "┃" .. paddedMsg .. "┃")
 		end
 
-		print("┏" .. ("━"):rep(paddingNum * 5.5) .. "┓")
+		print("┏" .. ("━"):rep(paddingNum * LARGE_SCALE_FACTOR) .. "┓")
 		print(table.concat(processedLines, "\n"))
-		print("┗" .. ("━"):rep(paddingNum * 5.5) .. "┛")
+		print("┗" .. ("━"):rep(paddingNum * LARGE_SCALE_FACTOR) .. "┛")
 	else
-		print("┏" .. ("━"):rep(#msg * 4) .. "┓")
+		print("┏" .. ("━"):rep(#msg * REGULAR_SCALE_FACTOR) .. "┓")
 		print("┃" .. pad .. msg .. pad .. " " .. "┃")
-		print("┗" .. ("━"):rep(#msg * 4) .. "┛")
+		print("┗" .. ("━"):rep(#msg * REGULAR_SCALE_FACTOR) .. "┛")
 	end
 end
 
