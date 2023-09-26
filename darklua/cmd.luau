@@ -54,31 +54,7 @@ local function ProcessWhich(binName: string): { path: string?, warnings: { strin
 	}
 end
 
-Darklua.Type = "Darklua"
-
-Darklua.Interface = {}
-Darklua.Prototype = {}
-
-function Darklua.Prototype.ToString(self: DarkluaExtended): string
-	return string.format("%s<%s>", Darklua.Type, "Global")
-end
-
-function Darklua.Prototype.IsOk(self: DarkluaExtended): boolean
-	if self.darkluaPath and Fs.isFile(self.darkluaPath) then
-		local isExecutable = Process.spawn(self.darkluaPath, { "--help" }, { stdio = "default" }).ok
-
-		return isExecutable
-	end
-
-	return false
-end
-
-function Darklua.Prototype.Process(
-	self: DarkluaExtended,
-	sourceKind: "code" | "path",
-	source: string,
-	configPath: string?
-): { error: string?, processed: string? }
+function __DarkluaInit(sourceKind: "code" | "path", source: string): { res: { string }?, error: string? }
 	local sourcePath: string
 
 	if sourceKind == "code" then
@@ -108,6 +84,50 @@ function Darklua.Prototype.Process(
 			error = "failed to create temporary file for darklua minification",
 		}
 	end
+
+	-- [1] => sourcePath
+	-- [2] => outFilePath
+	return {
+		res = { sourcePath, outFilePath },
+	}
+end
+
+Darklua.Type = "Darklua"
+
+Darklua.Interface = {}
+Darklua.Prototype = {}
+
+function Darklua.Prototype.ToString(self: DarkluaExtended): string
+	return string.format("%s<%s>", Darklua.Type, "Global")
+end
+
+function Darklua.Prototype.IsOk(self: DarkluaExtended): boolean
+	if self.darkluaPath and Fs.isFile(self.darkluaPath) then
+		local isExecutable = Process.spawn(self.darkluaPath, { "--help" }, { stdio = "default" }).ok
+
+		return isExecutable
+	end
+
+	return false
+end
+
+function Darklua.Prototype.Process(
+	self: DarkluaExtended,
+	sourceKind: "code" | "path",
+	source: string,
+	configPath: string?
+): { error: string?, processed: string? }
+	local initOut = __DarkluaInit(sourceKind, source)
+	if initOut.error then
+		return {
+			error = initOut.error,
+		}
+	end
+
+	local paths = initOut.res :: { string }
+
+	local sourcePath = paths[1]
+	local outFilePath = paths[2]
 
 	local args = { "--config" }
 
@@ -137,36 +157,17 @@ function Darklua.Prototype.Minify(
 	sourceKind: "code" | "path",
 	source: string
 ): { error: string?, minified: string? }
-	local sourcePath: string
-
-	if sourceKind == "code" then
-		local ok, tmpFilePath = FsUtils.MakeTemp()
-
-		if not ok then
-			return {
-				error = "failed to create temporary file for darklua minification",
-			}
-		end
-
-		Fs.writeFile(tmpFilePath, source)
-
-		sourcePath = tmpFilePath
-	elseif sourceKind == "path" then
-		sourcePath = source
-	else
+	local initOut = __DarkluaInit(sourceKind, source)
+	if initOut.error then
 		return {
-			error = "invalid sourceKind provided",
+			error = initOut.error,
 		}
 	end
 
-	local ok, outFilePath = FsUtils.MakeTemp()
+	local paths = initOut.res :: { string }
 
-	if not ok then
-		return {
-			error = "failed to create temporary file for darklua minification",
-		}
-	end
-
+	local sourcePath = paths[1]
+	local outFilePath = paths[2]
 	local darkluaChild = Process.spawn(self.darkluaPath, { "minify", sourcePath, outFilePath })
 
 	if not darkluaChild.ok then
