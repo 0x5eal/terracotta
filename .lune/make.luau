@@ -9,7 +9,7 @@ local WAX_PREFIX_FORMAT = function(type: "error" | "info", scope: string?)
 	return stdio.color(if type == "error" then "red" else "green") .. (scope or "[wax]") .. stdio.color("reset")
 end
 
-local boxifyOutput = function(msg: string)
+local BoxifyOutput = function(msg: string)
 	local pad = (" "):rep(#msg / 2)
 
 	if msg:find("\n") then
@@ -96,7 +96,7 @@ task.spawn(function()
 	task.cancel(loader)
 	print("\b \n")
 
-	boxifyOutput(child.stdout)
+	BoxifyOutput(child.stdout)
 
 	if not child.ok then
 		print()
