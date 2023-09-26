@@ -1,0 +1,6 @@
+# Wax related dirs
+.wax
+.wax-tmp
+
+# Compiled outputs
+terracotta.luau
