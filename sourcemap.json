@@ -1,1 +1,46 @@
-{"name":"terracotta","className":"Folder","filePaths":["default.project.json"],"children":[{"name":"darklua","className":"Folder","children":[{"name":"bundler","className":"ModuleScript","filePaths":["darklua/bundler.luau"]},{"name":"cmd","className":"ModuleScript","filePaths":["darklua/cmd.luau"]},{"name":"codegen","className":"ModuleScript","filePaths":["darklua/codegen.luau"]},{"name":"minifier","className":"ModuleScript","filePaths":["darklua/minifier.luau"]}]},{"name":"terracotta","className":"Folder"}]}
+{
+  "name": "terracotta",
+  "className": "Folder",
+  "filePaths": ["default.project.json"],
+  "children": [
+    {
+      "name": "darklua",
+      "className": "ModuleScript",
+      "filePaths": ["darklua/init.luau"],
+      "children": [
+        {
+          "name": "bundler",
+          "className": "ModuleScript",
+          "filePaths": ["darklua/bundler.luau"]
+        },
+        {
+          "name": "cmd",
+          "className": "ModuleScript",
+          "filePaths": ["darklua/cmd.luau"]
+        },
+        {
+          "name": "codegen",
+          "className": "ModuleScript",
+          "filePaths": ["darklua/codegen.luau"]
+        },
+        {
+          "name": "minifier",
+          "className": "ModuleScript",
+          "filePaths": ["darklua/minifier.luau"]
+        }
+      ]
+    },
+    {
+      "name": "terracotta",
+      "className": "ModuleScript",
+      "filePaths": ["src/init.luau"],
+      "children": [
+        {
+          "name": "terracotta",
+          "className": "ModuleScript",
+          "filePaths": ["src/terracotta.luau"]
+        }
+      ]
+    }
+  ]
+}

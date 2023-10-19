@@ -51,6 +51,10 @@ local BoxifyOutput = function(msg: string)
 	end
 end
 
+if not fs.isDir("dist/") then
+	fs.writeDir("dist/")
+end
+
 print(`{WAX_PREFIX_FORMAT("info", "[codegen]")} Generating darklua config file at darklua.config.json`)
 fs.writeFile(
 	".darklua.json5",
@@ -85,10 +89,15 @@ local loader = task.spawn(function()
 end)
 
 task.spawn(function()
-	local child = spawn(
-		"lune",
-		{ "wax", "bundle", "input=default.project.json", "verbose=true", "minify=true", "output=terracotta.luau" }
-	)
+	local child = spawn("lune", {
+		"wax",
+		"bundle",
+		"input=default.project.json",
+		"verbose=true",
+		"minify=true",
+		"ci-mode=true",
+		"output=dist/terracotta.luau",
+	})
 
 	task.cancel(loader)
 	print("\b \n")

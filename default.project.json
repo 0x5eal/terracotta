@@ -1,12 +1,12 @@
 {
-    "name": "terracotta",
-    "tree": {
-        "$className": "Folder",
-        "terracotta": {
-            "$path": "src/"
-        },
-        "darklua": {
-            "$path": "darklua/"
-        }
+  "name": "terracotta",
+  "tree": {
+    "$className": "Folder",
+    "terracotta": {
+      "$path": "src/"
+    },
+    "darklua": {
+      "$path": "darklua/"
     }
+  }
 }

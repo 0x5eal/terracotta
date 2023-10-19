@@ -1,7 +1,7 @@
 local Darklua = require("cmd")
 
 local Minifier = {}
-type MinfierExtended = typeof(Minifier.Prototype) & { darkluaPath: string?, darklua: Darklua.Darklua? }
+export type MinfierExtended = typeof(Minifier.Prototype) & { darkluaPath: string?, darklua: Darklua.Darklua? }
 
 Minifier.Prototype = {}
 Minifier.Interface = {}

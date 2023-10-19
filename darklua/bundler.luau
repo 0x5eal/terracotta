@@ -5,9 +5,12 @@ local FsUtils = require("../utils/fs")
 local Codegen = require("codegen")
 
 local Bundler = {}
-type BundlerExtended =
-	typeof(Bundler.Prototype)
-	& { darkluaPath: string?, darklua: Darklua.Darklua?, config: { contents: string, path: string? } }
+export type BundlerExtended = typeof(Bundler.Prototype) & {
+	darkluaPath: string?,
+	darklua: Darklua.Darklua?,
+	config: { contents: string, path: string? },
+}
+export type DarkluaRules = Codegen.Rules
 
 Bundler.Prototype = {}
 Bundler.Interface = {}
@@ -17,11 +20,11 @@ function Bundler.Prototype.Bundle(
 	self: BundlerExtended,
 	sourceKind: "code" | "path",
 	sourceInner: string
-): { error: string?, bundled: string? }
+): { error: string?, processed: string? }
 	self.darklua = Darklua.new(self.darkluaPath)
 
 	if self.darklua:IsOk() then
-		return self.darklua:Process("code", sourceInner, self.config.path or (function()
+		return self.darklua:Process(sourceKind, sourceInner, self.config.path or (function()
 			local _, path = FsUtils.MakeTemp()
 			Fs.writeFile(
 				path,
