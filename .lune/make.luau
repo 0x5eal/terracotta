@@ -56,16 +56,21 @@ if not fs.isDir("dist/") then
 end
 
 print(`{WAX_PREFIX_FORMAT("info", "[codegen]")} Generating darklua config file at darklua.config.json`)
-fs.writeFile(
-	".darklua.json5",
-	codegen({
-		generator = "dense",
-		rules = {
-			"remove_spaces",
-			"rename_variables",
-		},
-	})
-)
+
+if not fs.isFile("dist/.darklua.json5") then
+	fs.writeFile(
+		"dist/.darklua.json5",
+		codegen({
+			generator = "dense",
+			rules = {
+				"remove_spaces",
+				"remove_comments",
+				"rename_variables",
+				"rename_variables",
+			},
+		})
+	)
+end
 
 local loader = task.spawn(function()
 	local chars = { "-", "\\", "|", "/" }
@@ -96,6 +101,7 @@ task.spawn(function()
 		"verbose=true",
 		"minify=true",
 		"ci-mode=true",
+		"darklua-config-path=dist/.darklua.json5",
 		"output=dist/terracotta.luau",
 	})
 
@@ -111,6 +117,4 @@ task.spawn(function()
 		print()
 		print(`{WAX_PREFIX_FORMAT("info")} Successfully built terracotta.luau!`)
 	end
-
-	fs.removeFile(".darklua.json5")
 end)
