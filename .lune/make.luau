@@ -94,7 +94,7 @@ local loader = task.spawn(function()
 end)
 
 task.spawn(function()
-	local child = spawn("lune", {
+	local child = spawn("./lunew", {
 		"wax",
 		"bundle",
 		"input=default.project.json",

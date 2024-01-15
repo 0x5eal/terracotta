@@ -1,0 +1,13 @@
+#!/bin/bash
+
+lune=$(which lune)
+
+if (( $(lune --version | cut -d ' ' -f 2 | cut -d '.' -f 2) >= 8 )); then
+    if compgen -G "$1*" > /dev/null || compgen -G ".lune/$1*" > /dev/null; then
+        lune run "$@"
+        exit $?
+    fi
+fi
+
+lune "$@"
+exit $?
