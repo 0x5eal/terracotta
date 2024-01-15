@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#########################################################################
+#   A handy bash script which emulates pre 0.8 lune execution behavior. #
+#   This script checks if there is a lua(u) script at discoverable      #
+#   paths, and if so, executes them with `lune run`, allowing for       #
+#   implicit script execution as before.                                #
+#                 USAGE: ./lunew [ARGS] [PARAMETERS]                    #
+#########################################################################
+
 lune=$(which lune)
 
 if (( $(lune --version | cut -d ' ' -f 2 | cut -d '.' -f 2) >= 8 )); then
