@@ -3,6 +3,6 @@
 
 # To add a new tool, add an entry to this table.
 [tools]
-lune = "lune-org/lune@0.8.0"
+lune = "lune-org/lune@0.8.3"
 darklua = "seaofvoices/darklua@0.12.1"
 rojo = "rojo-rbx/rojo@7.3.0"
