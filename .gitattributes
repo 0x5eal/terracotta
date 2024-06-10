@@ -1,3 +1,0 @@
-# Ad-hoc syntax highlighting & indexing for luau
-*.luau linguist-language=Lua
-*.*.luau linguist-language=Lua
